@@ -95,7 +95,14 @@ final class Connection {
      * retrieve the last id that was inserted 
      */
     public function last_id() {
-        return mysqli_insert_id($this->link);
+        return $this->link->insert_id();
+    }
+    
+    /**
+     * retrieve the number of affected rows on last INSERT, UPDATE, DELETE, or REPLACE query
+     */
+    public function affected_rows() {
+        return $this->link->affected_rows();
     }
     
     /**
