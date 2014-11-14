@@ -6,7 +6,7 @@ require_once('Result.php');
  * Interface for connecting to a database and doing queries, a wrapper for MySQLi
  */
 final class Connection {
-	
+    
     /* The mysql database connection information */
     private $DB_SERVER;
     private $DB_USER;
@@ -14,9 +14,9 @@ final class Connection {
     private $DB_NAME;
     
     /* The mysqli link */
-	private $link;
-	
-	/** 
+    private $link;
+    
+    /** 
      * Constructor - 
      * opens a new database connection object
      * @param string DB_SERVER name of database server to connect to
@@ -24,7 +24,7 @@ final class Connection {
      * @param string DB_PASS password to database
      * @param string DB_NAME name of database
      */
-	public function __construct($DB_SERVER = null, $DB_USER = null, $DB_PASS = null, $DB_NAME = null) {
+    public function __construct($DB_SERVER = null, $DB_USER = null, $DB_PASS = null, $DB_NAME = null) {
         if ($DB_SERVER && $DB_USER && $DB_PASS && $DB_NAME) {
             $this->DB_SERVER = $DB_SERVER;
             $this->DB_USER   = $DB_USER;
@@ -36,8 +36,8 @@ final class Connection {
             $this->DB_PASS   = DB_PASS;
             $this->DB_NAME   = DB_NAME;
         }
-		$this->open();
-	}
+        $this->open();
+    }
     
     /**
      * Destructor - 
@@ -120,8 +120,8 @@ final class Connection {
         if ($this->link == null) {
             $this->link = new mysqli($this->DB_SERVER, $this->DB_USER, $this->DB_PASS, $this->DB_NAME);
         }
-		if ($this->link->connect_error) {
-			die('Connect Error (' . $this->link->connect_errno . ') ' . $this->link->connect_error);
+        if ($this->link->connect_error) {
+            die('Connect Error (' . $this->link->connect_errno . ') ' . $this->link->connect_error);
         }
         return $this;
     }
