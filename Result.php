@@ -69,7 +69,7 @@ class Result {
             }
             return $row;
         }
-        return $false;
+        return false;
      }
     
     /**
