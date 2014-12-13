@@ -95,7 +95,7 @@ final class Connection {
      * retrieve the last id that was inserted 
      */
     public function last_id() {
-        return $this->link->insert_id();
+        return $this->link->insert_id;
     }
     
     /**
