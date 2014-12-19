@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once('Constants.php');
 require_once('Result.php');
 
@@ -6,18 +6,18 @@ require_once('Result.php');
  * Interface for connecting to a database and doing queries, a wrapper for MySQLi
  */
 final class Connection {
-    
+
     /* The mysql database connection information */
     private $DB_SERVER;
     private $DB_USER;
     private $DB_PASS;
     private $DB_NAME;
-    
+
     /* The mysqli link */
     private $link;
-    
-    /** 
-     * Constructor - 
+
+    /**
+     * Constructor -
      * opens a new database connection object
      * @param string DB_SERVER name of database server to connect to
      * @param string DB_USER name of database user
@@ -38,24 +38,24 @@ final class Connection {
         }
         $this->open();
     }
-    
+
     /**
-     * Destructor - 
+     * Destructor -
      * called as soon as there are no references left to this object
      * closes the mysqli connection
      */
     public function __destruct() {
         $this->close();
     }
-    
+
     /**
-     * Run a raw query on the database 
+     * Run a raw query on the database
      * It's suggested to use run() instead
      */
     public function query($sql) {
         return $this->link->query($sql);
     }
-    
+
     /**
      * Get a prepared statement object from the database, suggested to use run() instead
      * @param string $statement a MySQL statement to run - use ?'s for parameters
@@ -63,12 +63,12 @@ final class Connection {
     public function prepare($statement) {
         return $this->link->prepare($statement);
     }
-    
+
     /**
      * Bind arguments to a statement and execute the statement
      *
      * @param string statement a MySQL statement to run - use ?'s for parameters
-     * @param string arg_types types of arguments  
+     * @param string arg_types types of arguments
      *    i    for integer value
      *    s    for string value
      *    b    for blob values
@@ -90,23 +90,23 @@ final class Connection {
         $result = new Result($stmnt);
         return $result;
     }
-    
+
     /**
-     * retrieve the last id that was inserted 
+     * retrieve the last id that was inserted
      */
     public function last_id() {
         return $this->link->insert_id;
     }
-    
+
     /**
      * retrieve the number of affected rows on last INSERT, UPDATE, DELETE, or REPLACE query
      */
     public function affected_rows() {
-        return $this->link->affected_rows();
+        return $this->link->affected_rows;
     }
-    
+
     /**
-     * close the connection 
+     * close the connection
      * - This method is called on __destruct()
      * attempts to completely close it
      */
@@ -118,10 +118,10 @@ final class Connection {
         }
         return $this;
     }
-    
+
     /**
      * Open a connection to a database - if it needs to
-     * @return $this - a connection, it will open a new one if it needs to 
+     * @return $this - a connection, it will open a new one if it needs to
      */
     public function open() {
         if ($this->link == null) {
@@ -132,14 +132,14 @@ final class Connection {
         }
         return $this;
     }
-    
+
     /**
      * get the actual mysqli link object
      */
     public function link() {
         return $this->link;
     }
-    
+
     /**
      * Sanitize a numeric input
      * @param integer $number the integer you want sanitized
@@ -147,7 +147,7 @@ final class Connection {
     public function clean_int($integer) {
         return is_numeric($integer) ? intval($integer) : false;
     }
-    
+
     /**
      * Sanitize a string input
      * @param integer $string the string you want sanitized
@@ -162,15 +162,15 @@ final class Connection {
             return $str;
         }
     }
-    
+
     /**
-     * Count the number of rows in a result set 
+     * Count the number of rows in a result set
      * @param MYSQLi Result $result the result set to count
      */
     public function num_rows($result) {
         return $result ? mysqli_num_rows($result) : 0;
     }
-    
+
     /**
      * Fetch array result set row, very useful for looping through a result set.
      * @param MYSQLi Result $result the result set to retrieve a row from
