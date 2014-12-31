@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ALL);
+namespace mywrap;
 date_default_timezone_set("America/Chicago");
 
 /* MYSQL DATABASE SERVER */
