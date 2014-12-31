@@ -1,5 +1,5 @@
 <?php
 require_once('Constants.php');
-require_once('Result.php');
-require_once('Connection.php');
+require_once('mywrap_result.php');
+require_once('mywrap_connection.php');
 ?>
