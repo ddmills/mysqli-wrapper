@@ -2,6 +2,7 @@
 /**
  * Used as a wrapper for prepared statements after they're executed.
  */
+namespace mywrap;
 class Result {
 
     private $bound_variables;

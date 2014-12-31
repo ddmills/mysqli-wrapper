@@ -1,10 +1,8 @@
 <?php
-require_once('Constants.php');
-require_once('Result.php');
-
 /**
  * Interface for connecting to a database and doing queries, a wrapper for MySQLi
  */
+namespace mywrap;
 final class Connection {
 
     /* The mysql database connection information */
@@ -125,7 +123,7 @@ final class Connection {
      */
     public function open() {
         if ($this->link == null) {
-            $this->link = new mysqli($this->DB_SERVER, $this->DB_USER, $this->DB_PASS, $this->DB_NAME);
+            $this->link = new \mysqli($this->DB_SERVER, $this->DB_USER, $this->DB_PASS, $this->DB_NAME);
         }
         if ($this->link->connect_error) {
             die('Connect Error (' . $this->link->connect_errno . ') ' . $this->link->connect_error);
