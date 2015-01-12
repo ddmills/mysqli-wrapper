@@ -73,19 +73,27 @@ final class mywrap_con {
    * @param array||mixed params list of parameters to pass to bind_param
    */
   public function run($statement, $arg_types = null, $params = null) {
-    $stmnt = $this->link->prepare($statement);
-    if ($arg_types && $params) {
-      $params = is_array($params) ? array_merge(array($arg_types), $params) : array_merge(array($arg_types), array($params));
-      $refs   = array();
-      foreach($params as $key => $value) {
-        $refs[$key] = &$params[$key];
+    if ($stmnt = $this->link->prepare($statement)) {
+
+      if ($arg_types && $params) {
+        $params = is_array($params) ? array_merge(array($arg_types), $params) : array_merge(array($arg_types), array($params));
+        $refs   = array();
+        foreach($params as $key => $value) {
+          $refs[$key] = &$params[$key];
+        }
+        $bind = call_user_func_array(array($stmnt, 'bind_param'), $refs);
+        if (false === $bind) {
+          throw new Exception('bind_param() failed: ' . $this->link->error);
+        }
       }
-      call_user_func_array(array($stmnt, 'bind_param'), $refs);
+      if ($stmnt->execute()) {
+        $stmnt->store_result();
+        $result = new mywrap_result($stmnt);
+        return $result;
+      }
+      throw new Exception('execute() failed: ' . htmlspecialchars($this->link->error));
     }
-    $stmnt->execute();
-    $stmnt->store_result();
-    $result = new mywrap_result($stmnt);
-    return $result;
+    throw new Exception('prepare() failed: ' . htmlspecialchars($this->link->error));
   }
 
   /**
@@ -100,6 +108,13 @@ final class mywrap_con {
    */
   public function affected_rows() {
     return $this->link->affected_rows;
+  }
+
+  /**
+   * retrieve the last error code, if any
+   */
+  public function errno() {
+    return $this->link->errno;
   }
 
   /**
