@@ -31,7 +31,7 @@ class mywrap_result {
       call_user_func_array(array($this->statement, 'bind_result'), $this->bound_variables);
       $meta->close();
     }
-	}
+}
 
   /**
    * Destructor -
