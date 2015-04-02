@@ -16,7 +16,7 @@ define('DB_NAME', 'my_db_name');
 
 Include mywrap.php in your file
 ```php
-include 'path/to/myswli-wrapper/mywrap.php'
+include 'path/to/mysqli-wrapper/mywrap.php'
 ```
 
 ## Open a connection
@@ -24,7 +24,8 @@ The default constructor will
 ```php
 $connection = new mywrap_con();
 ```
-Alternatively, you can use specify a database to use:
+
+Alternatively, you can use a specific database by specifying the parameters:
 ```php
 $connection = new mywrap_con('my_db_host', 'my_db_user', 'my_db_user_password', 'my_db_name');
 ```
